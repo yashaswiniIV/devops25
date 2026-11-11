@@ -1,0 +1,11 @@
+pipeline{
+agent any
+trigger{githubpush()}
+stages{ stage(checkout){checkout crm}
+stage(build) {bar javac --version
+javac AppTestjava, Appjava}
+stage(test){
+javac AppTestjava}
+success{ echo "build success"}
+failure{ echo "build failure"]
+}

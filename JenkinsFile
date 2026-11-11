@@ -1,11 +1,25 @@
-pipeline{
-agent any
-trigger{githubpush()}
-stages{ stage(checkout){checkout crm}
-stage(build) {bar javac --version
-javac AppTestjava, Appjava}
-stage(test){
-javac AppTestjava}
-success{ echo "build success"}
-failure{ echo "build failure"]
+
+pipeline {
+    agent any
+    triggers { githubPush() }
+
+    stages {
+        stage('Checkout') {
+            steps { checkout scm }
+        }
+        stage('Build') {
+            steps {
+                bat 'javac -version'
+                bat 'javac App.java AppTest.java'
+            }
+        }
+        stage('Test') {
+            steps { bat 'java AppTest' }
+        }
+    }
+
+    post {
+        success { echo 'Build stable' }
+        failure { echo 'Build failed' }
+    }
 }
